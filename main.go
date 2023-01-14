@@ -1,11 +1,14 @@
 package main
 
 import (
-	"bonmanush/bengali"
+	"bonmanush/spelldict"
 	"fmt"
 )
 
 func main() {
-	r := bengali.IsUnresBnChar('\u0984') //false
-	fmt.Println(r)
+
+	sdb, _ := spelldict.ReadAkademiSpellGob("akademi_db.gob")
+	fmt.Println(sdb.Count)
+	fmt.Println(sdb.Contains(sdb.Db[100]))
+
 }
