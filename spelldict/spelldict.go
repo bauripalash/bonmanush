@@ -1,7 +1,7 @@
 package spelldict
 
 import (
-	"bufio"
+	"bonmanush/utility"
 	"bytes"
 	"encoding/gob"
 	"os"
@@ -42,38 +42,13 @@ func ReadAkademiSpellGob(filename string) (AkademiSpellDB, error) {
 
 }
 
-func ReadAkademiSpellTxt(filename string) ([]string, error) {
-	fpath := filename
-	var result []string
-	if !path.IsAbs(filename) {
-		cwd, err := os.Getwd()
-		if err != nil {
-			return nil, err
-		}
-
-		fpath = path.Join(cwd, fpath)
-	}
-
-	file, err := os.Open(fpath)
-
+func ReadAkademiSpellTxt(filename string) (AkademiSpellDB, error) {
+	wl, err := utility.GetWordlistFromFile(filename)
 	if err != nil {
-		return nil, err
+		return AkademiSpellDB{}, err
 	}
 
-	defer file.Close()
-
-	fscanner := bufio.NewScanner(file)
-
-	for fscanner.Scan() {
-		result = append(result, fscanner.Text())
-	}
-
-	if err := fscanner.Err(); err != nil {
-		return nil, err
-	}
-
-	return result, nil
-
+	return NewAkademiSpellDB(wl), nil
 }
 
 func NewAkademiSpellDB(db []string) AkademiSpellDB {

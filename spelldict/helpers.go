@@ -1,9 +1,8 @@
 package spelldict
 
-
 func containsString(arr []string, target string) bool {
-	for _ , item := range arr{
-		if item == target{
+	for _, item := range arr {
+		if item == target {
 			return true
 		}
 	}
